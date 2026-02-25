@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Journal — The Illusion Machine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="site-nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">The Illusion Machine</a>
+            <div class="nav-links">
+                <a href="index.html">Phase 1: The Promise</a>
+                <a href="journal.html" class="active">Research Journal</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="journal-hero">
+        <div class="hero-inner">
+            <div class="hero-label">The Constant — Reflective Journal</div>
+            <h1>Research Journal</h1>
+            <p class="hero-subtitle">Tracking my intellectual journey through this project — what shocked me, what shifted, and what I'm still wrestling with.</p>
+        </div>
+    </header>
+
+    <main class="content">
+
+        <!-- JOURNAL ENTRY 1 -->
+        <article class="journal-entry">
+            <div class="journal-date">
+                <span class="journal-number">01</span>
+                <span class="journal-date-text">Week of Feb 10, 2026</span>
+            </div>
+
+            <h2>The ESG Reports Read Like Marketing Decks, and That Bothers Me More Than I Expected</h2>
+
+            <p>I spent the first week of this project doing something I've honestly never done before: sitting down and actually reading corporate sustainability reports cover to cover. Not skimming the summary pages or the infographics — really reading the methodology sections, the footnotes, the way they frame their metrics.</p>
+
+            <p>What shocked me was how good they are at sounding accountable without actually being accountable. Microsoft's 2024 report is a masterclass in this. They lead with their 34 GW of contracted clean energy and their carbon removal deals. The language is specific and confident. But buried deeper in the report is the admission that their actual emissions rose 23.4% since 2020. Their electricity consumption nearly tripled. Their SBTi commitment — the one independent benchmark that would hold them to a standard — was quietly dropped.</p>
+
+            <p>I've been at AMD for two internships now. I've sat in rooms where people talk about product roadmaps and performance-per-watt metrics. And I always took the efficiency story at face value — EPYC processors genuinely are more efficient than the last generation. AMD's 30x25 goal was real engineering work, and they beat it at 38.5x. But what I'm realizing is that efficiency improvements at the chip level don't mean much when the total number of chips being deployed is growing exponentially. You can make each server 25x more efficient, but if you're deploying 100x more servers, you haven't solved anything. You've just made the growth slightly less catastrophic.</p>
+
+            <p>This is the thing that shifted for me this week: I used to think of sustainability in tech as primarily an engineering problem. Design better chips, build more efficient cooling, source renewable energy. And those things matter — I'm not dismissing them. But after reading these reports, I think the bigger issue is structural. The business model requires endless growth in compute. Every efficiency gain gets eaten by the next scaling push. Microsoft's own CSO basically admitted this when she said AI is both the problem and the solution — but nobody's explaining how the solution outpaces the problem when capex is heading toward $700 billion.</p>
+
+            <p>The other thing that really got to me was the Renewable Energy Certificate accounting. I didn't know this was how it worked. I assumed when Google said "matched with 100% renewable energy" that meant their datacenters were physically running on solar and wind. It doesn't. It means they bought paper certificates that may correspond to renewable energy generated somewhere else, possibly at a different time, on a different grid. Under the actual physical accounting, the emissions are potentially 662% higher. That's not a rounding error. That's a fundamentally different picture of reality.</p>
+
+            <p>I'm going into the lobbying research next week, and I have a feeling it's going to make me even more uncomfortable. But I'm also starting to feel like this project is exactly the kind of thing I should be doing as someone who's about to start full-time in this industry. I want to understand the full picture — not just the product roadmap, but the system the roadmap exists within.</p>
+        </article>
+
+        <!-- JOURNAL ENTRY 2 -->
+        <article class="journal-entry">
+            <div class="journal-date">
+                <span class="journal-number">02</span>
+                <span class="journal-date-text">Week of Feb 17, 2026</span>
+            </div>
+
+            <h2>When I Looked Up the Lobbying Numbers, the Sustainability Reports Stopped Making Sense</h2>
+
+            <p>This was the week where the two halves of the research collided, and honestly, it was disorienting.</p>
+
+            <p>I went into the lobbying data using OpenSecrets and Issue One's tracking. The numbers themselves aren't surprising if you know anything about tech lobbying — $61.5 million combined in 2024, Meta employing nearly 300 lobbyists, NVIDIA's spend jumping 7x in two years. Big companies lobby. That's not news.</p>
+
+            <p>What is news — at least to me — is <em>what they're lobbying for</em>. InfluenceMap's analysis showed that only 4% of Big Tech's federal lobbying touched climate policy. Four percent. These companies have entire sustainability departments, they publish 100-page environmental reports, they run Super Bowl ads about clean energy — and when it comes time to actually influence legislation, climate barely registers. The Chamber of Commerce, which all five major tech companies fund, actively lobbies against binding climate measures. So these companies are simultaneously publishing net-zero pledges and financially supporting the primary organization working to ensure those pledges remain voluntary.</p>
+
+            <p>The Virginia story hit me hardest because it's so specific and so recent. All 17 datacenter regulation bills defeated in the 2026 session. Not some of them. All of them. The Data Center Coalition — Amazon, Google, Microsoft, Meta — lobbied against zoning restrictions and environmental protections in the state that hosts the most datacenters on Earth. Virginia's datacenter tax exemption program has grown from an estimated $1.5 million per year when it was created to $1.6 billion annually. That's over a thousand-fold increase in the cost to taxpayers, and the industry is still fighting any attempt to add conditions.</p>
+
+            <p>And then there's the Ohio and Louisiana research. Ohio: $2.5 billion in tax incentives for 356 jobs. That's roughly $7 million per job in foregone public revenue. Louisiana: the state literally rewrote its zoning laws for Meta's $10 billion Hyperion project, and Entergy is building three new gas plants that'll consume twice what New Orleans uses on a peak day. Regular ratepayers may cover half the infrastructure cost. These aren't abstract policy debates — these are specific decisions that redirect public resources away from schools, roads, and water systems toward some of the most profitable companies in history.</p>
+
+            <p>I keep coming back to this tension. I'm about to start full-time at AMD. I believe in the engineering work happening there. The chiplet architecture, the efficiency gains, the 30x25 goal — these represent genuinely impressive technical achievements. But this project is forcing me to reckon with the fact that technical achievements exist within a political and economic context that can completely overwhelm them. AMD makes more efficient chips, and that's real. But the system those chips plug into is one where lobbying defeats environmental regulation, where tax breaks drain community budgets, and where water gets diverted from drought-stricken neighborhoods to cool servers.</p>
+
+            <p>I don't think the answer is to stop building AI or to shut down datacenters. That's not realistic and honestly not what I want. But I'm starting to think the answer definitely isn't what these companies are doing now — which is spending $700 billion on expansion while spending 4% of their lobbying budget on the climate crisis they're accelerating.</p>
+
+            <p>The most clarifying thing I read this week was the Beyond Fossil Fuels report showing that 74% of Big Tech's claims about AI solving climate change are unproven, with 36% citing zero evidence. Zero. And the key distinction they make — between traditional AI (documented applications, lower footprint) and generative AI (massive footprint, no verified climate benefits) — is something I hadn't thought about clearly before. When Google says AI enabled 26 million tons of reductions, they're mostly talking about Google Maps routing and Nest thermostats. That's not the same thing as ChatGPT or Gemini or the massive training runs driving the datacenter buildout. The industry is using the credibility of one type of AI to justify the expansion of a completely different type.</p>
+
+            <p>Going into the Phase 2 case studies, I want to find specific communities and trace the full chain — from the corporate promise, through the lobbying, through the tax deal, to the actual impact on people's water bills and air quality. That's where this gets real.</p>
+        </article>
+
+        <div class="journal-footer">
+            <p><a href="index.html" class="next-link">← Back to Phase 1: The Promise</a></p>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <p>The Illusion Machine — ISR Project, Spring 2026</p>
+            <p class="footer-sub">Babson College · Thinking Critically · Communicating Effectively · Prioritizing Doing Good</p>
+        </div>
+    </footer>
+</body>
+</html>

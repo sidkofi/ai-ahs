@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Illusion Machine — Phase 1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="site-nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">The Illusion Machine</a>
+            <div class="nav-links">
+                <a href="index.html" class="active">Phase 1: The Promise</a>
+                <a href="journal.html">Research Journal</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-inner">
+            <div class="hero-label">Phase 1 — The Corporate Promise & The Industry Landscape</div>
+            <h1>The Illusion Machine</h1>
+            <p class="hero-subtitle">How Big Tech sells a green future while lobbying to prevent it</p>
+            <div class="hero-meta">
+                <span class="author">By Kofi</span>
+                <span class="sep">·</span>
+                <span class="date">February 2026</span>
+                <span class="sep">·</span>
+                <span class="read-time">18 min read</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="content">
+        <article class="post">
+
+            <div class="lede">
+                <p>Every major tech company has a sustainability page. Every one promises a greener future — carbon negative, water positive, net-zero by some date that's always just far enough away to avoid accountability today. The language is careful and optimistic. The graphics are clean. The commitments sound transformative.</p>
+                <p>But then you look at the lobbying records. The tax abatement deals. The water permits in drought-stricken towns. The diesel generators installed without permits in Black neighborhoods. And you start to see the machine for what it is.</p>
+                <p>This is Phase 1 of my ISR. The goal is simple: lay out what these companies say they'll do, and then show what they're actually doing. The gap between those two things is the subject of everything that follows.</p>
+            </div>
+
+            <!-- SECTION 1 -->
+            <h2>Part I: The Promises</h2>
+
+            <p>I started by reading the ESG reports and sustainability pages of seven companies — four hyperscalers building the datacenters (Microsoft, Google, Amazon, Meta) and three semiconductor companies designing the chips inside them (NVIDIA, AMD, Intel). What struck me immediately wasn't the ambition of their pledges. It was how <em>similar</em> they all sound. The same vocabulary, the same framing: we acknowledge the problem, we're investing in solutions, and our technology is actually part of the answer.</p>
+
+            <p>Here's what they're promising:</p>
+
+            <div class="company-card">
+                <h3>Microsoft</h3>
+                <p><strong>Carbon negative by 2030. Water positive by 2030. Remove all historical emissions by 2050.</strong></p>
+                <p>Microsoft claims to have contracted 34 GW of carbon-free energy across 24 countries and secured over 30 million metric tons in carbon removal deals. Their CSO, Melanie Nakagawa, frames AI itself as the solution: the same force pushing them away from their goals in the short term will build the "bigger, faster rocket" to reach them long term.<sup><a href="https://blogs.microsoft.com/on-the-issues/2025/02/13/progress-on-the-road-to-2030/" target="_blank">1</a></sup></p>
+            </div>
+
+            <div class="company-card">
+                <h3>Google</h3>
+                <p><strong>Net-zero across all operations and value chain by 2030. 24/7 carbon-free energy on every grid.</strong></p>
+                <p>Google reports a fleet-wide datacenter PUE (Power Usage Effectiveness) of 1.09 — extremely efficient by industry standards — and claims its products enabled 26 million metric tons of CO₂e reductions in 2024 through tools like fuel-efficient routing in Maps and the Nest thermostat. The new Ironwood TPU is marketed as nearly 30x more power efficient than Google's first Cloud TPU from 2018.<sup><a href="https://sustainability.google/google-2025-environmental-report/" target="_blank">2</a></sup></p>
+            </div>
+
+            <div class="company-card">
+                <h3>Amazon / AWS</h3>
+                <p><strong>Net-zero by 2040 via The Climate Pledge. 100% renewable energy match for a second year.</strong></p>
+                <p>Amazon co-founded The Climate Pledge in 2019 and claims to match all electricity with renewables across 621 projects globally (34 GW total). AWS markets itself as 4.1x more energy efficient than running your own servers on-premises.<sup><a href="https://sustainability.aboutamazon.com/2024-report" target="_blank">3</a></sup></p>
+            </div>
+
+            <div class="company-card">
+                <h3>Meta</h3>
+                <p><strong>Net-zero in global operations since 2020. Net-zero across entire value chain by 2030.</strong></p>
+                <p>All of Meta's owned datacenters are certified LEED Gold or higher (52 buildings, roughly 36 million square feet). Meta reports returning 1.59 billion gallons of water to high-stress regions and even built a $70 million water treatment facility in Kuna, Idaho, then gifted it to the city.<sup><a href="https://sustainability.atmeta.com/" target="_blank">4</a></sup></p>
+            </div>
+
+            <div class="company-card">
+                <h3>NVIDIA</h3>
+                <p><strong>Blackwell GPUs: 25x more energy efficient than Hopper for large LLMs. 50x more than CPUs for inference.</strong></p>
+                <p>NVIDIA's FY2025 sustainability report claims that switching HPC and AI workloads from CPU-only servers to GPU-accelerated systems could save 40 trillion watt-hours annually.<sup><a href="https://images.nvidia.com/aem-dam/Solutions/documents/NVIDIA-Sustainability-Report-Fiscal-Year-2025.pdf" target="_blank">5</a></sup></p>
+            </div>
+
+            <div class="company-card">
+                <h3>AMD</h3>
+                <p><strong>Exceeded "30x25" energy efficiency goal at 38.5x. Targets 95% power reduction in AI training racks by 2030.</strong></p>
+                <p>AMD claims its next efficiency target would reduce the number of server racks needed for AI training from 275 to less than one — interesting framing from a company I know well.<sup><a href="https://www.amd.com/en/corporate/corporate-responsibility/data-center-sustainability.html" target="_blank">6</a></sup></p>
+            </div>
+
+            <div class="company-card">
+                <h3>Intel</h3>
+                <p><strong>Net-zero Scope 1 and 2 by 2040. Net positive water globally by 2030.</strong></p>
+                <p>Intel has already achieved water positivity in the U.S., India, Costa Rica, and Mexico.<sup><a href="https://www.intel.com/content/www/us/en/foundry/manufacturing/sustainability.html" target="_blank">7</a></sup></p>
+            </div>
+
+            <p>Reading these reports back-to-back, you'd think the tech industry has climate change handled. The language is polished and the targets are specific. But specificity isn't the same thing as accountability — and the numbers these same companies report in their own filings tell a very different story.</p>
+
+            <!-- SECTION 2 -->
+            <h2>Part II: The Numbers That Don't Add Up</h2>
+
+            <p>The most damning evidence against these pledges comes from the companies' own sustainability reports. Not from critics — from themselves.</p>
+
+            <div class="stat-block">
+                <div class="stat-number">48%</div>
+                <div class="stat-label">Google's emissions increase since 2019 — reaching 14.3 million metric tons CO₂e in 2023</div>
+                <div class="stat-source"><a href="https://blog.google/outreach-initiatives/sustainability/2024-environmental-report/" target="_blank">Google 2024 Environmental Report</a></div>
+            </div>
+
+            <p>Google quietly abandoned its prior claim of operational carbon neutrality and now acknowledges that net-zero by 2030 is "extremely ambitious." That's corporate for "it's not happening."</p>
+
+            <div class="stat-block">
+                <div class="stat-number">23.4%</div>
+                <div class="stat-label">Microsoft's emissions increase from its 2020 baseline — to roughly 14.86 million metric tons in FY2024</div>
+                <div class="stat-source"><a href="https://blogs.microsoft.com/on-the-issues/2024/05/15/microsoft-environmental-sustainability-report-2024/" target="_blank">Microsoft 2024 Sustainability Report</a></div>
+            </div>
+
+            <p>Microsoft's electricity consumption nearly tripled between 2020 and 2024 (10.8 million MWh to 29.8 million MWh). Water use rose 87% since 2020. Their Science Based Targets initiative (SBTi) commitment was removed in spring 2024 after they failed to submit a compliant plan. Microsoft President Brad Smith's response? The answer is not to slow AI down, but to "speed up the work needed to make it more environmentally friendly." That framing is doing a lot of heavy lifting.</p>
+
+            <div class="stat-block">
+                <div class="stat-number">68.25M</div>
+                <div class="stat-label">Amazon's absolute emissions in metric tons for 2024 — up 6% year-over-year, roughly 20M tons above 2019 baseline</div>
+                <div class="stat-source"><a href="https://stand.earth/press-releases/amazons-sustainability-report-shows-the-company-moving-the-wrong-way-on-climate-with-continued-emissions-growth/" target="_blank">Stand.earth analysis</a></div>
+            </div>
+
+            <p>Amazon was removed from SBTi entirely for failing to file reduction targets. Meanwhile, Meta's Scope 3 emissions rose by about 1 million tonnes in 2024 alone, sitting 58% above its 2021 baseline — making its 2031 target of not exceeding that baseline look increasingly unreachable.</p>
+
+            <div class="callout">
+                <h4>The 662% Problem</h4>
+                <p>Here's the part that really changed how I think about all of this. A September 2024 Guardian investigation found that actual datacenter emissions from Google, Microsoft, Meta, and Apple are likely <strong>662% higher than officially reported</strong>. The reason? Companies use Renewable Energy Certificates (RECs) — essentially paper credits — that don't require the renewable energy to actually be consumed at their facilities. Under location-based accounting (what's physically happening on the grid), Meta's 2022 Scope 2 emissions jump from 273 metric tons to over 3.8 million metric tons. Microsoft's jump from 280,782 to 6.1 million.<sup><a href="https://www.theguardian.com/technology/2024/sep/15/data-center-gas-emissions-tech" target="_blank">8</a></sup></p>
+                <p>This is serious enough that <strong>16 state attorneys general launched a formal investigation</strong> in September 2025, calling these accounting practices "environmental accounting gimmicks" and a "shell game."<sup><a href="https://dojmt.gov/attorney-general-knudsen-launches-investigation-into-big-tech-companies/" target="_blank">9</a></sup></p>
+            </div>
+
+            <p>The NewClimate Institute's 2025 Corporate Climate Responsibility Monitor delivered the sharpest institutional verdict on all of this: tech companies' GHG emissions targets appear to have "lost their meaning and relevance." That's not a random blog post — that's one of the most credible climate accountability organizations in the world.</p>
+
+            <!-- SECTION 3 -->
+            <h2>Part III: The Lobbying Disconnect</h2>
+
+            <p>If the sustainability reports are the front of the house, lobbying records are the back kitchen. And the kitchen is a mess.</p>
+
+            <div class="stat-block">
+                <div class="stat-number">$61.5M</div>
+                <div class="stat-label">Combined Big Tech federal lobbying spending in 2024 — a 13% increase from 2023</div>
+                <div class="stat-source"><a href="https://issueone.org/articles/big-tech-spent-record-sums-on-lobbying-last-year/" target="_blank">Issue One</a></div>
+            </div>
+
+            <p>From 2020 to 2024, these companies spent a combined $260 million on federal lobbying. Meta alone employed nearly 300 lobbyists in 2024 — roughly one for every two members of Congress — and hit a record $26.29 million in 2025. NVIDIA's lobbying surged 7x, from $350,000 in 2023 to $4.9 million in 2025, as AI regulation discussions intensified.<sup><a href="https://www.opensecrets.org/news/2025/02/federal-lobbying-set-new-record-in-2024/" target="_blank">10</a></sup></p>
+
+            <p>But the key question isn't how much they spend — it's <em>what they spend it on</em>. A 2021 InfluenceMap analysis found that just <strong>4% of Big Tech's federal lobbying activities focused on climate-related policy</strong>. Senator Sheldon Whitehouse put it bluntly: Big Tech has "refused to lift a finger to push comprehensive climate action in Congress." All five major companies remain members of the U.S. Chamber of Commerce, which actively lobbies against binding climate measures.<sup><a href="https://influencemap.org/report/Big-Tech-and-Climate-Policy-afb476c56f217ea0ab351d79096df04a" target="_blank">11</a></sup></p>
+
+            <p>At the state level, the pattern is even more direct:</p>
+
+            <div class="example-block">
+                <h4>Virginia</h4>
+                <p>The world's largest datacenter market. The Data Center Coalition (members include Amazon, Google, Microsoft, Meta) lobbied against zoning restrictions and environmental protections. All 17 bills aimed at tighter datacenter regulation were defeated or postponed in the 2026 legislative session. The state spent $732 million on its datacenter sales tax exemption in FY2024 — a program originally estimated to cost $1.5 million per year when enacted. It now costs <strong>$1.6 billion annually</strong>.<sup><a href="https://www.multistate.us/insider/2026/2/4/states-rethink-data-center-tax-incentives-as-costs-soar" target="_blank">12</a></sup></p>
+            </div>
+
+            <div class="example-block">
+                <h4>Louisiana</h4>
+                <p>The state rewrote zoning laws and suspended competitive bidding requirements to accommodate Meta's $10 billion Hyperion datacenter. Entergy is building three new natural gas-fired power plants to serve it — plants that will consume roughly twice the energy used by New Orleans on a peak day. Regular ratepayers may be on the hook for half the cost of the new power infrastructure.<sup><a href="https://lailluminator.com/2025/12/19/electricity-data-centers/" target="_blank">13</a></sup></p>
+            </div>
+
+            <div class="example-block">
+                <h4>Ohio</h4>
+                <p>The state granted $2.5 billion in tax incentives between 2017 and 2024. Thirteen approved agreements covering $5.1 billion in investment generated only 356 jobs — that's a revenue loss of nearly <strong>$1 million per job created</strong>. Amazon's exemption alone potentially lasts through 2055.<sup><a href="https://signalohio.org/data-centers-have-claimed-2-5-billion-in-tax-breaks-since-2017-report-says/" target="_blank">14</a></sup></p>
+            </div>
+
+            <p>Good Jobs First, a subsidy watchdog organization, states: "We know of no other form of state spending that is so out of control… such subsidies are absolutely unnecessary for an extremely profitable industry dominated by some of the most valuable corporations on earth." These companies collectively plan $320–$400 billion in capital expenditure in 2025 alone, projected to reach $650–$700 billion in 2026 — yet they extract billions in tax exemptions from communities with poverty rates exceeding 25%.<sup><a href="https://goodjobsfirst.org/cloudy-with-a-loss-of-spending-control-how-data-centers-are-endangering-state-budgets/" target="_blank">15</a></sup></p>
+
+            <!-- SECTION 4 -->
+            <h2>Part IV: Water, Energy, and the Physical Reality</h2>
+
+            <p>Behind the accounting tricks and lobbying dollars are real resources being consumed in real places.</p>
+
+            <div class="stat-block">
+                <div class="stat-number">6.4B gal</div>
+                <div class="stat-label">Google's global water consumption in 2023 (95% for datacenters) — up 17% from 2022</div>
+                <div class="stat-source"><a href="https://sustainability.google/reports/google-2024-environmental-report/" target="_blank">Google Environmental Report</a></div>
+            </div>
+
+            <p>A single Google facility in Council Bluffs, Iowa, consumed roughly 1 billion gallons — enough to supply all of Iowa's residential water for five days. Microsoft's water use rose 87% since 2020. U.S. datacenters collectively consumed 17 billion gallons directly through cooling in 2023, with an additional 211 billion gallons consumed indirectly through electricity generation. The Lawrence Berkeley National Laboratory projects this could double or quadruple by 2028.<sup><a href="https://theconversation.com/data-centers-consume-massive-amounts-of-water-companies-rarely-tell-the-public-exactly-how-much-262901" target="_blank">16</a></sup></p>
+
+            <p>These demands hit hardest in the driest places. Google's Mesa, Arizona datacenter holds a water permit for 5.5 million cubic meters per year — equivalent to the consumption of 23,000 Arizonans — at a negotiated rate of $6.08 per 1,000 gallons while residents pay $10.80. Google is expanding with a second Mesa datacenter despite Arizona revoking construction permits for new homes in Maricopa County in June 2023 due to groundwater depletion. A former Amazon water sustainability manager, Nathan Wangusi, publicly stated: "I raised the issue in all the right places that this is not ethical."<sup><a href="https://www.source-material.org/amazon-microsoft-google-trump-data-centres-water-use/" target="_blank">17</a></sup></p>
+
+            <div class="stat-block">
+                <div class="stat-number">415 TWh</div>
+                <div class="stat-label">Global datacenter electricity consumption in 2024 — projected to reach 945 TWh by 2030 (equivalent to Japan's total usage)</div>
+                <div class="stat-source"><a href="https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai" target="_blank">IEA Energy and AI Report</a></div>
+            </div>
+
+            <p>A single ChatGPT query uses roughly 10x the electricity of a Google search. Training GPT-4 is estimated at 51,773–62,319 MWh — over 40x what GPT-3 required. More than half of U.S. datacenter electricity comes from fossil fuels. In Georgia, regulators approved roughly 10,000 MW of new capacity including five new natural gas plants specifically to serve datacenters — placing what the Southern Environmental Law Center called "a $60 billion risk on the backs of everyday Georgians."<sup><a href="https://georgiarecorder.com/2025/12/19/georgia-regulators-approve-massive-power-grid-expansion-to-serve-data-centers/" target="_blank">18</a></sup></p>
+
+            <!-- SECTION 5 -->
+            <h2>Part V: The "AI Will Fix It" Defense</h2>
+
+            <p>The industry's go-to response to all of this is that AI will ultimately generate more environmental benefits than costs. I wanted to take that claim seriously, so I looked at the research.</p>
+
+            <p>A February 2026 report by Beyond Fossil Fuels, Stand.earth, and the Green Web Foundation analyzed 154 AI climate claims from Big Tech. The findings are striking: only 26% cited published academic papers. A full 36% cited no evidence whatsoever. And researchers found <strong>zero verified examples</strong> of consumer generative AI (ChatGPT, Gemini, Copilot) leading to material emissions reductions.<sup><a href="https://beyondfossilfuels.org/2026/02/17/the-ai-climate-hoax-behind-the-curtain-of-how-big-tech-greenwashes-impacts/" target="_blank">19</a></sup></p>
+
+            <p>The report identifies what it calls a "bait-and-switch": companies conflate "traditional AI" (which has documented climate applications and a lower energy footprint) with "generative AI" (which has a massive footprint and no verified climate benefits). When Google says its AI enabled 26 million tons of reductions, more than half of that claim is based on interviews without third-party validation, according to an Internet Policy Review analysis.<sup><a href="https://policyreview.info/articles/news/big-techs-2025-sustainability-reports/2027" target="_blank">20</a></sup></p>
+
+            <div class="pullquote">
+                "It appears tech companies are using vagueness about what happens within energy-hogging data centres to greenwash a planet-wrecking expansion."
+                <cite>— Ketan Joshi, report author, Beyond Fossil Fuels (2026)</cite>
+            </div>
+
+            <p>The Internet Policy Review characterized this as "obfuscation-by-complexity" — not textbook greenwashing, but something more sophisticated. Enabled emissions are never reported while speculative avoided emissions are highlighted. Microsoft's electricity consumption nearly tripled in four years, but their sustainability reports emphasize declining "market-based" emissions. The location-based numbers — what's physically happening — tell a different story entirely.</p>
+
+            <!-- SECTION 6 -->
+            <h2>Part VI: Communities Pay the Price</h2>
+
+            <p>The abstract policy failures translate to concrete human impacts. As of 2025, <strong>$64 billion in U.S. datacenter projects have been blocked or delayed by community opposition</strong> — a figure that reflects not NIMBYism but real grievances about water, noise, energy costs, and broken promises.<sup><a href="https://virginiamercury.com/2025/05/21/report-highlights-community-pushback-stalling-64-billion-in-data-center-development-nationwide/" target="_blank">21</a></sup></p>
+
+            <p>In Loudoun County, Virginia — home to roughly 200 operational datacenters and 117 more in the pipeline — water usage increased 250% between 2019 and 2023. The county ended by-right datacenter zoning in March 2025, now requiring public hearings. County Chair Phyllis Randall captured the shift: leaders used to sell datacenters with tax benefits, but now constituents say "I don't care."<sup><a href="https://grist.org/technology/surging-demand-data-guzzling-water-ai/" target="_blank">22</a></sup></p>
+
+            <p>The environmental justice dimension is especially disturbing. In Memphis, xAI installed 35 unpermitted methane gas turbines in Boxtown — a predominantly Black community where cancer risk is already 4x the national average. University of Tennessee researchers found peak NO₂ levels increased 79% near the facility. The NAACP partnered with the Southern Environmental Law Center to challenge the installation, and the EPA ruled in January 2026 that xAI violated the Clean Air Act. Tennessee State Rep. Justin Pearson's words stay with me: "Our lives and our lungs are being sacrificed on the altar of their capitalistic exploitation."<sup><a href="https://time.com/7308925/elon-musk-memphis-ai-data-center/" target="_blank">23</a></sup></p>
+
+            <p>A national poll found only 44% of Americans would welcome a datacenter nearby — making datacenters less popular than gas plants, wind farms, or nuclear facilities. That's a remarkable public sentiment shift for an industry that positions itself as the engine of progress.</p>
+
+            <!-- CONCLUSION -->
+            <h2>What I'm Taking Away</h2>
+
+            <p>Going into this research, I expected to find some gap between marketing and reality. Every industry has that. What I didn't expect was how <em>structural</em> the disconnect is. It operates at three distinct levels:</p>
+
+            <p><strong>An accounting disconnect:</strong> REC-based "market-based" reporting allows companies to claim clean energy use while their physical emissions may be up to 662% higher than reported. The 16-state attorney general investigation suggests this isn't just an academic concern.</p>
+
+            <p><strong>A lobbying disconnect:</strong> Trade associations funded by these companies systematically defeat the environmental regulations that would make their own pledges enforceable. Only 4% of their federal lobbying touches climate policy. A 2023 InfluenceMap study found that 58% of major companies with climate commitments had lobbying activities that directly contradicted those commitments.<sup><a href="https://influencemap.org/briefing/The-State-of-Net-Zero-Greenwash-24402" target="_blank">24</a></sup></p>
+
+            <p><strong>A distributional disconnect:</strong> Communities in Loudoun County, Mesa, Memphis, and rural Louisiana bear the water depletion, noise, diesel emissions, and grid strain. The companies that promised partnership extract billions in tax exemptions that drain the public services those communities need.</p>
+
+            <p>The gap between promise and action isn't a failure of execution. It's a structural feature of how the industry operates. And that's what the rest of this ISR will investigate — not from the boardroom, but from the communities on the ground.</p>
+
+            <div class="post-footer">
+                <p><strong>Next up:</strong> Phase 2 dives into specific case studies — a U.S. municipality and a community in the Global South — to document how these dynamics play out in real neighborhoods, real water systems, and real household utility bills.</p>
+                <p><a href="journal.html" class="next-link">Read the Research Journal →</a></p>
+            </div>
+
+            <div class="sources-section">
+                <h3>Sources</h3>
+                <ol class="sources-list">
+                    <li><a href="https://blogs.microsoft.com/on-the-issues/2025/02/13/progress-on-the-road-to-2030/" target="_blank">Microsoft, "Progress on the Road to 2030," Feb 2025</a></li>
+                    <li><a href="https://sustainability.google/google-2025-environmental-report/" target="_blank">Google 2025 Environmental Report</a></li>
+                    <li><a href="https://sustainability.aboutamazon.com/2024-report" target="_blank">Amazon 2024 Sustainability Report</a></li>
+                    <li><a href="https://sustainability.atmeta.com/" target="_blank">Meta Sustainability Report</a></li>
+                    <li><a href="https://images.nvidia.com/aem-dam/Solutions/documents/NVIDIA-Sustainability-Report-Fiscal-Year-2025.pdf" target="_blank">NVIDIA FY2025 Sustainability Report</a></li>
+                    <li><a href="https://www.amd.com/en/corporate/corporate-responsibility/data-center-sustainability.html" target="_blank">AMD Data Center Sustainability</a></li>
+                    <li><a href="https://www.intel.com/content/www/us/en/foundry/manufacturing/sustainability.html" target="_blank">Intel Manufacturing Sustainability</a></li>
+                    <li><a href="https://www.theguardian.com/technology/2024/sep/15/data-center-gas-emissions-tech" target="_blank">The Guardian, "Data center emissions 662% higher," Sep 2024</a></li>
+                    <li><a href="https://dojmt.gov/attorney-general-knudsen-launches-investigation-into-big-tech-companies/" target="_blank">Montana DOJ Greenwashing Investigation, Sep 2025</a></li>
+                    <li><a href="https://www.opensecrets.org/news/2025/02/federal-lobbying-set-new-record-in-2024/" target="_blank">OpenSecrets, Federal Lobbying Record 2024</a></li>
+                    <li><a href="https://influencemap.org/report/Big-Tech-and-Climate-Policy-afb476c56f217ea0ab351d79096df04a" target="_blank">InfluenceMap, "Big Tech and Climate Policy," 2021</a></li>
+                    <li><a href="https://www.multistate.us/insider/2026/2/4/states-rethink-data-center-tax-incentives-as-costs-soar" target="_blank">MultiState, "States Rethink Datacenter Tax Incentives," Feb 2026</a></li>
+                    <li><a href="https://lailluminator.com/2025/12/19/electricity-data-centers/" target="_blank">Louisiana Illuminator, "Electricity and Data Centers," Dec 2025</a></li>
+                    <li><a href="https://signalohio.org/data-centers-have-claimed-2-5-billion-in-tax-breaks-since-2017-report-says/" target="_blank">Signal Ohio, "$2.5 Billion in Tax Breaks," 2024</a></li>
+                    <li><a href="https://goodjobsfirst.org/cloudy-with-a-loss-of-spending-control-how-data-centers-are-endangering-state-budgets/" target="_blank">Good Jobs First, "Cloudy with a Loss of Spending Control"</a></li>
+                    <li><a href="https://theconversation.com/data-centers-consume-massive-amounts-of-water-companies-rarely-tell-the-public-exactly-how-much-262901" target="_blank">The Conversation, "Data Centers Consume Massive Water," 2025</a></li>
+                    <li><a href="https://www.source-material.org/amazon-microsoft-google-trump-data-centres-water-use/" target="_blank">Source Material, Big Tech Water Use Investigation</a></li>
+                    <li><a href="https://georgiarecorder.com/2025/12/19/georgia-regulators-approve-massive-power-grid-expansion-to-serve-data-centers/" target="_blank">Georgia Recorder, "Massive Power Grid Expansion," Dec 2025</a></li>
+                    <li><a href="https://beyondfossilfuels.org/2026/02/17/the-ai-climate-hoax-behind-the-curtain-of-how-big-tech-greenwashes-impacts/" target="_blank">Beyond Fossil Fuels, "The AI Climate Hoax," Feb 2026</a></li>
+                    <li><a href="https://policyreview.info/articles/news/big-techs-2025-sustainability-reports/2027" target="_blank">Internet Policy Review, "Big Tech's 2025 Sustainability Reports"</a></li>
+                    <li><a href="https://virginiamercury.com/2025/05/21/report-highlights-community-pushback-stalling-64-billion-in-data-center-development-nationwide/" target="_blank">Virginia Mercury, "$64 Billion Stalled," May 2025</a></li>
+                    <li><a href="https://grist.org/technology/surging-demand-data-guzzling-water-ai/" target="_blank">Grist, "Data is Guzzling Virginia's Water"</a></li>
+                    <li><a href="https://time.com/7308925/elon-musk-memphis-ai-data-center/" target="_blank">TIME, "Inside Memphis' Battle Against xAI," 2025</a></li>
+                    <li><a href="https://influencemap.org/briefing/The-State-of-Net-Zero-Greenwash-24402" target="_blank">InfluenceMap, "State of Net Zero Greenwash," 2023</a></li>
+                </ol>
+            </div>
+
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <p>The Illusion Machine — ISR Project, Spring 2026</p>
+            <p class="footer-sub">Babson College · Thinking Critically · Communicating Effectively · Prioritizing Doing Good</p>
+        </div>
+    </footer>
+</body>
+</html>
