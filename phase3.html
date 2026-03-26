@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Illusion of Clean AI - Phase 3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <style>
+        /* Phase 3 specific styles */
+        .map-section {
+            margin: 2.5rem -1.5rem;
+            background: var(--text);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        @media (max-width: 640px) {
+            .map-section {
+                margin: 2rem -1.2rem;
+            }
+        }
+
+        .map-header {
+            padding: 1.4rem 1.6rem 0.8rem;
+        }
+
+        .map-header h3 {
+            font-family: var(--sans);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 0.3rem;
+        }
+
+        .map-header p {
+            font-family: var(--sans);
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.4);
+            line-height: 1.5;
+        }
+
+        #pushback-map {
+            width: 100%;
+            height: 520px;
+            background: #1a1a1a;
+        }
+
+        @media (max-width: 640px) {
+            #pushback-map {
+                height: 380px;
+            }
+        }
+
+        .map-legend {
+            padding: 0.8rem 1.6rem 1.2rem;
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-family: var(--sans);
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .legend-dot.blocked { background: #e74c3c; }
+        .legend-dot.moratorium { background: #f39c12; }
+        .legend-dot.organized { background: #3498db; }
+        .legend-dot.legal { background: #9b59b6; }
+
+        /* Custom Leaflet popup */
+        .leaflet-popup-content-wrapper {
+            background: #1a1a1a;
+            color: #fff;
+            border-radius: 6px;
+            font-family: 'DM Sans', sans-serif;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            max-width: 320px;
+        }
+
+        .leaflet-popup-tip {
+            background: #1a1a1a;
+        }
+
+        .leaflet-popup-content {
+            margin: 0;
+            padding: 1rem 1.2rem;
+            font-size: 13px;
+            line-height: 1.55;
+        }
+
+        .popup-location {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 0.15rem;
+            color: #fff;
+        }
+
+        .popup-type {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+            padding: 2px 6px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        .popup-type.blocked { background: rgba(231,76,60,0.2); color: #e74c3c; }
+        .popup-type.moratorium { background: rgba(243,156,18,0.2); color: #f39c12; }
+        .popup-type.organized { background: rgba(52,152,219,0.2); color: #3498db; }
+        .popup-type.legal { background: rgba(155,89,182,0.2); color: #9b59b6; }
+
+        .popup-desc {
+            color: rgba(255,255,255,0.75);
+            margin-bottom: 0.5rem;
+        }
+
+        .popup-source {
+            font-size: 11px;
+            color: rgba(255,255,255,0.35);
+        }
+
+        .popup-source a {
+            color: rgba(255,255,255,0.45);
+        }
+
+        .popup-source a:hover {
+            color: #fff;
+        }
+
+        .leaflet-popup-close-button {
+            color: rgba(255,255,255,0.4) !important;
+            font-size: 18px !important;
+        }
+
+        .leaflet-popup-close-button:hover {
+            color: #fff !important;
+        }
+
+        /* Filter bar */
+        .map-filters {
+            padding: 0 1.6rem 0.6rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            font-family: var(--sans);
+            font-size: 0.68rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 3px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: transparent;
+            color: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            border-color: rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.8);
+        }
+
+        .filter-btn.active {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.3);
+            color: #fff;
+        }
+
+        /* Subsection head style */
+        .subsection-head {
+            font-family: var(--sans);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 0.8rem;
+            color: var(--text);
+            border: none;
+            padding: 0;
+        }
+
+        /* Counter row */
+        .counter-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        @media (max-width: 640px) {
+            .counter-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .counter-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+
+        .counter-card .num {
+            font-family: var(--sans);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1.1;
+        }
+
+        .counter-card .label {
+            font-family: var(--sans);
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <nav class="site-nav">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">The Illusion of Clean AI</a>
+            <div class="nav-links">
+                <a href="index.html">Phase 1: The Promise</a>
+                <a href="phase2.html">Phase 2: The Price</a>
+                <a href="phase3.html" class="active">Phase 3: The Pushback</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-inner">
+            <div class="hero-label">Community Responses &amp; Global Resistance</div>
+            <h1>The Pushback</h1>
+            <p class="hero-subtitle">How communities worldwide are fighting the unchecked expansion of AI infrastructure</p>
+            <div class="hero-meta">
+                <span class="date">March 2026</span>
+                <span class="sep">&middot;</span>
+                <span class="read-time">14 min read</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="content">
+        <article class="post">
+
+            <div class="lede">
+                <p>Phase 1 documented the gap between Big Tech's sustainability promises and their actual emissions, water use, and lobbying. Phase 2 looked at what this means on the ground in two communities. For Phase 3, I wanted to answer a different question: what are people doing about it?</p>
+                <p>The answer, it turns out, is quite a lot. From Virginia subdivisions to Chilean environmental courts to Irish energy regulators, a global movement is forming to push back against the unchecked expansion of data centers. It is not a single coordinated campaign. It is hundreds of local fights that are increasingly learning from one another.</p>
+            </div>
+
+            <h2>The Scale of Resistance</h2>
+
+            <div class="counter-row">
+                <div class="counter-card">
+                    <div class="num">188+</div>
+                    <div class="label">Active opposition groups across the U.S. as of Q2 2025</div>
+                </div>
+                <div class="counter-card">
+                    <div class="num">$98B</div>
+                    <div class="label">In projects blocked or delayed in Q2 2025 alone</div>
+                </div>
+                <div class="counter-card">
+                    <div class="num">25</div>
+                    <div class="label">U.S. data center projects canceled due to local opposition in 2025</div>
+                </div>
+            </div>
+
+            <p>According to Data Center Watch, community opposition surged 125% in the second quarter of 2025, with 53 active groups across 17 states targeting 30 projects. Of the projects that faced sustained opposition, 66% were blocked or delayed. Heatmap News reported that 21 of the 25 cancellations in 2025 occurred in the second half of the year, suggesting that opposition is accelerating, not slowing down.</p>
+
+            <p>Water use is the number one concern cited in opposition campaigns, appearing in more than 40% of contested projects. Energy consumption and electricity rate increases rank second, followed by noise pollution. These three issues appear in virtually every campaign.</p>
+
+            <p>Communities in at least 14 states have enacted temporary pauses on data center development. The moratorium movement jumped from local town boards to state legislatures in early 2026. A national poll found that only 44% of Americans would welcome a data center in their area, making them less popular than gas plants, wind farms, or nuclear facilities.</p>
+
+            <!-- INTERACTIVE MAP -->
+            <h2>Global Pushback Map</h2>
+
+            <p>The map below shows documented cases of community opposition, regulatory action, and legal challenges against data center projects worldwide. Click on any marker to learn about the specific action taken and its outcome. Use the filters to focus on specific types of resistance.</p>
+
+            <div class="map-section">
+                <div class="map-header">
+                    <h3>Data Center Pushback Worldwide</h3>
+                    <p>Documented cases of community opposition, regulatory action, moratoriums, and legal challenges (2023&ndash;2026)</p>
+                </div>
+                <div class="map-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="blocked">Blocked / Canceled</button>
+                    <button class="filter-btn" data-filter="moratorium">Moratorium / Regulation</button>
+                    <button class="filter-btn" data-filter="organized">Organized Opposition</button>
+                    <button class="filter-btn" data-filter="legal">Legal Challenge</button>
+                </div>
+                <div id="pushback-map"></div>
+                <div class="map-legend">
+                    <div class="legend-item"><div class="legend-dot blocked"></div>Project Blocked or Canceled</div>
+                    <div class="legend-item"><div class="legend-dot moratorium"></div>Moratorium or New Regulation</div>
+                    <div class="legend-item"><div class="legend-dot organized"></div>Organized Community Opposition</div>
+                    <div class="legend-item"><div class="legend-dot legal"></div>Legal Challenge or Court Action</div>
+                </div>
+            </div>
+
+            <!-- REGIONAL BREAKDOWN -->
+            <h2>What's Working</h2>
+
+            <p>Looking across these cases, a few strategies have proven effective at either stopping projects outright or forcing meaningful concessions from developers.</p>
+
+            <h3 class="subsection-head">Grassroots Organizing at Public Hearings</h3>
+
+            <p>The most common and often most effective tactic is simply showing up. In Indianapolis, hundreds of residents packed a City-County Council meeting in September 2025, requiring two overflow rooms. Google withdrew its 468-acre rezoning request minutes before the vote, which was expected to fail. In Louisa County, Virginia, sustained community pressure led Amazon Web Services to withdraw a 7.2 million square foot proposal in July 2025. In Tucson, Arizona, residents attended town board meetings, wrote op-eds, and emailed officials about "Project Blue," an Amazon-backed hyperscale facility that would have consumed millions of gallons of desert drinking water. The city council unanimously voted to discontinue discussions with the developer.</p>
+
+            <h3 class="subsection-head">Legal and Regulatory Challenges</h3>
+
+            <p>In Prince William County, Virginia, two lawsuits filed against data centers planned near the Manassas National Battlefield Park culminated in a court ruling that voided a major rezoning. The project now faces a mandated revote and a timeline that could stretch at least two years. In Chile, environmental courts revoked the license for Google's second data center in Santiago after community complaints about water consumption, forcing the company to commit to waterless cooling. In Memphis, Tennessee, the EPA ruled in January 2026 that xAI violated the Clean Air Act by installing 35 unpermitted methane gas turbines in a predominantly Black community.</p>
+
+            <h3 class="subsection-head">National Moratoriums and Policy Shifts</h3>
+
+            <p>Ireland imposed a de facto moratorium on new data center grid connections in Dublin from 2021 until late 2025. Data centers now consume nearly a quarter of Ireland's electricity. When the moratorium was finally lifted in December 2025, new rules required data centers to install on-site generation or battery systems matching their full demand, source 80% of electricity from new renewables, and feed excess generation back into the national grid. The Netherlands blocked Meta's proposed Zeewolde mega-campus after farmers challenged it on environmental and nitrogen-permit grounds. Singapore imposed its own three-year moratorium on new facilities. In the U.S., Georgia saw moratoriums enacted across eight municipalities, and New York proposed a statewide moratorium on data center permits in early 2026.</p>
+
+            <h3 class="subsection-head">Community Benefit Agreements</h3>
+
+            <p>Some communities have found ways to extract meaningful concessions rather than outright blocking projects. Lancaster, Pennsylvania established a model Community Benefit Agreement (CBA) for data center development that includes a water-use cap, noise and air emissions controls, and $20 million in community contributions. The Brookings Institution has advocated for CBAs as a way for communities to gain leverage, noting that the urgency of the AI buildout has put some localities "in the driver's seat" for deals. However, CBAs are only as strong as the enforcement mechanisms behind them, and the broken promises documented in Quer&eacute;taro should serve as a warning about unenforceable commitments.</p>
+
+            <h2>The Global South Fights Back</h2>
+
+            <p>The resistance is not limited to wealthy nations. Across Latin America, Africa, and Southeast Asia, communities are pushing back against what researchers have called "digital extractivism."</p>
+
+            <p>In Chile, the activist organization Mosacat (Socio Environmental Community Movement for Land and Water) has staged sustained protests against Google, Microsoft, and Amazon data centers in Santiago. Years of activism by residents of Cerrillos forced Google to switch to less water-intensive cooling technology. In Uruguay, the Commission in Defense of Water and Life, the same coalition that led a 2004 campaign resulting in a constitutional amendment making clean water a human right, organized protests that forced Google to revise plans for its Canelones data center. In Mexico, the National Antorchista Movement has lobbied the Quer&eacute;taro government to end water shortages and demand transparency about industry water consumption.</p>
+
+            <p>In Kenya, the High Court suspended Worldcoin's biometric data campaign and ordered the deletion of all collected iris scans, signaling growing judicial willingness to challenge tech companies operating without proper community consent. Across Africa, concerns about "digital colonialism" are driving calls for data sovereignty legislation that would require data to stay in-country and give communities a say in how infrastructure is built.</p>
+
+            <p>Malaysia moved to slow data center development in September 2024 after recognizing the strain on the nation's energy grid and water resources. These decisions reflect a growing understanding that the economic benefits promised by the data center industry are not automatic and that communities have the right to set terms.</p>
+
+            <h2>What I Learned</h2>
+
+            <p>The most important finding from this phase of research is that community opposition works. Not always, and not without significant effort, but the numbers are clear: 66% of projects facing sustained opposition are blocked or delayed. That is a powerful statistic for communities that feel powerless against trillion-dollar companies.</p>
+
+            <p>The second finding is that these fights are connected, even when the people involved do not know each other. A community in Indiana facing a Google data center is dealing with the same playbook, the same opacity, and the same set of promises as a farming community in Mexico dealing with Microsoft. The strategies that work in one place (showing up at hearings, filing environmental complaints, demanding water-use data) translate directly to others.</p>
+
+            <p>What is missing is coordination. Data Center Watch has begun tracking opposition groups and sharing data. AlgorithmWatch published a guide for European communities on how to resist data centers. But there is no equivalent resource for communities in the Global South, where the power imbalance between tech companies and local governments is even more severe.</p>
+
+            <p>The data center backlash is sometimes framed as NIMBYism, as people who simply do not want change in their backyard. But what these communities are asking for is basic: transparency about resource use, fair allocation of costs, and a say in decisions that reshape their lives. Those are not unreasonable demands. The fact that they have to fight this hard to get them says more about the industry than it does about the communities.</p>
+
+            <div class="post-footer">
+                <p><strong>What comes next:</strong> The final phase of this ISR will synthesize all three phases into a cohesive story about what I have learned, what I think can be done, and what this means for how we think about "progress" in the age of AI.</p>
+            </div>
+
+            <div class="sources-section">
+                <h3>Sources</h3>
+                <ol class="sources-list">
+                    <li><a href="https://www.datacenterwatch.org/q22025" target="_blank">Data Center Watch, Q2 2025 Report</a></li>
+                    <li><a href="https://heatmap.news/politics/data-center-cancellations-2025" target="_blank">Heatmap News, "Local Pushback, Canceled Data Centers Surged in 2025," Jan 2026</a></li>
+                    <li><a href="https://www.projectcensored.org/communities-against-ai-data-center/" target="_blank">Project Censored, "Communities Push Back Against AI Data Center Expansion," Jan 2026</a></li>
+                    <li><a href="https://thehill.com/policy/technology/5605667-data-center-criticism-study/" target="_blank">The Hill, "Bipartisan Local Backlash to Data Centers Halts $64B," Nov 2025</a></li>
+                    <li><a href="https://robertbryce.substack.com/p/the-data-center-backlash-is-global" target="_blank">Robert Bryce, "The Data Center Backlash Is Global," Dec 2025</a></li>
+                    <li><a href="https://www.datacenterfrontier.com/site-selection/article/55307719/when-communities-push-back-navigating-data-center-opposition" target="_blank">Data Center Frontier, "When Communities Push Back," Aug 2025</a></li>
+                    <li><a href="https://cleanenergyforum.yale.edu/2025/11/12/regulating-the-digital-giants-policy-and-public-responses-to-the-data-center-boom" target="_blank">Yale Clean Energy Forum, "Regulating the Digital Giants," Nov 2025</a></li>
+                    <li><a href="https://algorithmwatch.org/en/a-guide-to-data-centers/" target="_blank">AlgorithmWatch, "How to Resist Data Centers: A Guide for Local Communities in Europe," Nov 2025</a></li>
+                    <li><a href="https://www.pinsentmasons.com/out-law/news/irish-data-centres-power-national-grid-regulator" target="_blank">Pinsent Masons, "Ireland Ends Moratorium on Data Center Connections," Dec 2025</a></li>
+                    <li><a href="https://disconnect.blog/how-to-stop-a-data-center/" target="_blank">Disconnect, "How to Stop a Data Center," Sep 2025</a></li>
+                    <li><a href="https://nearshoreamericas.com/water-guzzling-data-centers-spark-outrage-across-latin-america/" target="_blank">Nearshore Americas, "Water-Guzzling Data Centers Spark Outrage Across Latin America," Feb 2025</a></li>
+                    <li><a href="https://www.techpolicy.press/what-irelands-data-center-crisis-means-for-the-eus-ai-sovereignty-plans/" target="_blank">Tech Policy Press, "What Ireland's Data Center Crisis Means for the EU," Dec 2025</a></li>
+                    <li><a href="https://introl.com/blog/data-center-community-opposition-64-billion-backlash" target="_blank">Introl, "Data Center Opposition: The $64B Financial Risk," Feb 2026</a></li>
+                    <li><a href="https://www.newamerica.org/planetary-politics/briefs/africas-digital-sovereignty-trap/" target="_blank">New America, "Africa's Digital Sovereignty Trap," 2025</a></li>
+                    <li><a href="https://algorithmwatch.org/en/protests-against-data-centers/" target="_blank">AlgorithmWatch, "With Google as My Neighbor, Will There Still Be Water?" 2025</a></li>
+                    <li><a href="https://www.brookings.edu/articles/local-implications-data-centers-rural-communities-us/" target="_blank">Brookings Institution, "Local Implications of Data Centers for Rural Communities," Mar 2026</a></li>
+                </ol>
+            </div>
+
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <p>The Illusion of Clean AI &mdash; ISR Phase 3, Spring 2026</p>
+            <p class="footer-sub">Olin College &middot; Thinking Critically &middot; Communicating Effectively &middot; Prioritizing Doing Good</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script>
+    (function() {
+        // Map data: documented pushback locations
+        const locations = [
+            // UNITED STATES
+            {
+                lat: 39.7684, lng: -86.1581,
+                name: "Indianapolis, Indiana",
+                type: "blocked",
+                desc: "Hundreds packed a City-County Council meeting in September 2025 to oppose a Google data center on 468 acres. Google withdrew its rezoning request minutes before the vote, which was expected to fail.",
+                source: "Axios / Robert Bryce, Dec 2025"
+            },
+            {
+                lat: 38.0, lng: -78.0,
+                name: "Louisa County, Virginia",
+                type: "blocked",
+                desc: "Sustained community pressure led Amazon Web Services to withdraw its 7.2 million sq ft data center proposal in July 2025. Extensive community meetings and organized resistance played a key role.",
+                source: "Data Center Frontier, Aug 2025"
+            },
+            {
+                lat: 38.75, lng: -77.47,
+                name: "Prince William County, Virginia",
+                type: "legal",
+                desc: "Two lawsuits against data centers planned near Manassas National Battlefield Park resulted in a court ruling voiding the Digital Gateway rezoning of 2,139 acres. The project faces a mandated revote with a timeline stretching at least two years.",
+                source: "Data Center Frontier, Aug 2025"
+            },
+            {
+                lat: 39.1, lng: -77.56,
+                name: "Loudoun County, Virginia",
+                type: "moratorium",
+                desc: "Home to roughly 200 operational data centers and 117 more in the pipeline. Water usage up 250% since 2019. The county ended by-right data center zoning in March 2025, now requiring public hearings for all new facilities.",
+                source: "Grist / Virginia Mercury, 2025"
+            },
+            {
+                lat: 32.22, lng: -110.97,
+                name: "Tucson, Arizona",
+                type: "blocked",
+                desc: "Residents opposed 'Project Blue,' an Amazon-backed facility that would use millions of gallons of desert drinking water. After sustained attendance at board meetings and op-eds, the city council unanimously voted to discontinue discussions with the developer in August 2025.",
+                source: "Project Censored / Earth Island Institute, 2025"
+            },
+            {
+                lat: 33.41, lng: -111.83,
+                name: "Mesa / West Valley, Arizona",
+                type: "blocked",
+                desc: "Tract withdrew plans for a $14 billion data center project after city officials declined to approve required rezoning. The company eventually relocated to Buckeye, AZ.",
+                source: "The Hill / Data Center Watch, 2025"
+            },
+            {
+                lat: 35.15, lng: -90.05,
+                name: "Memphis, Tennessee",
+                type: "legal",
+                desc: "The EPA ruled in January 2026 that xAI violated the Clean Air Act by installing 35 unpermitted methane gas turbines in Boxtown, a predominantly Black community where cancer risk is 4x the national average. The NAACP and Southern Environmental Law Center partnered to challenge the installation.",
+                source: "TIME / EPA, Jan 2026"
+            },
+            {
+                lat: 33.75, lng: -84.39,
+                name: "Georgia (statewide)",
+                type: "moratorium",
+                desc: "Eight municipalities enacted data center moratoriums. A wave of bipartisan bills was introduced in January 2026 in response to public outrage over data center expansion and electricity costs. Over 100 people rallied at the State Capitol in December 2025.",
+                source: "Georgia Recorder, Jan 2026"
+            },
+            {
+                lat: 41.47, lng: -87.06,
+                name: "Chesterton, Indiana",
+                type: "blocked",
+                desc: "Residents and local officials blocked a data center development worth billions. Community members organized around concerns about land use change and infrastructure strain in a small town.",
+                source: "The Hill / Data Center Watch, 2025"
+            },
+            {
+                lat: 38.56, lng: -94.55,
+                name: "Peculiar, Missouri",
+                type: "blocked",
+                desc: "Local residents and officials blocked a proposed data center development. The community organized rapidly around quality-of-life concerns in this small town outside Kansas City.",
+                source: "The Hill / Data Center Watch, 2025"
+            },
+            {
+                lat: 40.04, lng: -76.31,
+                name: "Lancaster, Pennsylvania",
+                type: "organized",
+                desc: "Established a model Community Benefit Agreement requiring water-use caps, noise and air emissions controls, and $20 million in community contributions from data center developers. The CBA is cited as a national template.",
+                source: "Introl / Brookings, 2026"
+            },
+            {
+                lat: 40.71, lng: -74.01,
+                name: "New York (statewide)",
+                type: "moratorium",
+                desc: "New York proposed a statewide moratorium on data center permits in February 2026, citing concerns about energy affordability and grid capacity. This represents the moratorium movement's jump from local boards to state legislatures.",
+                source: "DLA Piper, Feb 2026"
+            },
+            {
+                lat: 38.58, lng: -90.20,
+                name: "St. Louis, Missouri",
+                type: "moratorium",
+                desc: "Long-awaited rules limiting where data centers can be built in the city were introduced in February 2026, though aldermen initially denied a full pause as developers readied new applications.",
+                source: "St. Louis Public Radio, Feb 2026"
+            },
+            // EUROPE
+            {
+                lat: 53.35, lng: -6.26,
+                name: "Dublin, Ireland",
+                type: "moratorium",
+                desc: "Ireland imposed a de facto moratorium on new data center grid connections from 2021 to 2025. Data centers consume nearly 25% of Ireland's electricity. When lifted in December 2025, new rules required on-site generation, 80% renewable sourcing, and feeding excess power back to the grid.",
+                source: "CRU Ireland / Pinsent Masons, Dec 2025"
+            },
+            {
+                lat: 52.35, lng: 5.45,
+                name: "Zeewolde, Netherlands",
+                type: "blocked",
+                desc: "Meta's proposed mega-campus was derailed after farmers and residents challenged it on environmental and nitrogen-permit grounds. The campaign highlighted tensions between agricultural land use and industrial data infrastructure. The 'Save the Wieringermeer' group continues campaigning to protect farmland.",
+                source: "AlgorithmWatch, Nov 2025"
+            },
+            {
+                lat: 50.11, lng: 8.68,
+                name: "Frankfurt, Germany",
+                type: "organized",
+                desc: "Expert reviews of environmental impact assessments challenged company claims. Germany's data center boom is pushing the power grid to its limits, with the Frankfurt region hosting over 120 facilities. Public scrutiny is increasing as energy costs rise.",
+                source: "AlgorithmWatch / TechPolicy Press, 2025"
+            },
+            {
+                lat: 1.35, lng: 103.82,
+                name: "Singapore",
+                type: "moratorium",
+                desc: "Imposed a three-year moratorium on new data center construction due to energy and land constraints. Singapore is cautiously emerging from the freeze with strict sustainability requirements for new approvals.",
+                source: "Data Center Dynamics, 2022-2025"
+            },
+            // LATIN AMERICA
+            {
+                lat: -33.49, lng: -70.74,
+                name: "Santiago, Chile",
+                type: "legal",
+                desc: "Environmental courts revoked the license for Google's second data center in Cerrillos after community complaints about water consumption (7 billion liters/year). Google was forced to commit to waterless cooling. Microsoft's Quilicura data center also faces ongoing opposition. The Mosacat activist group coordinates regional resistance.",
+                source: "Rest of World / Disconnect / AlgorithmWatch, 2024-2025"
+            },
+            {
+                lat: -34.45, lng: -56.20,
+                name: "Canelones, Uruguay",
+                type: "organized",
+                desc: "The Commission in Defense of Water and Life organized protests against Google's proposed data center, which would consume 7.6 million liters of water daily (equal to 55,000 people's daily use) during the country's worst drought in 74 years. Google was forced to switch to air cooling. Activists said: 'It's not drought, it's pillage.'",
+                source: "Mongabay / Thomson Reuters Foundation, 2023-2024"
+            },
+            {
+                lat: 20.71, lng: -100.45,
+                name: "Quer&eacute;taro, Mexico",
+                type: "organized",
+                desc: "The National Antorchista Movement and local residents are pushing back against $12 billion in data center investment by Microsoft, Google, and Amazon in a drought-stricken region. Microsoft secured water rights equal to 24% of the municipality's public water allocation. Of 21 promised community projects, 19 remain incomplete as of late 2025.",
+                source: "Thomson Reuters Foundation / Tech Policy Press, 2024-2026"
+            },
+            {
+                lat: -23.55, lng: -46.63,
+                name: "S&atilde;o Paulo, Brazil",
+                type: "organized",
+                desc: "Half of Brazil's data centers are concentrated in S&atilde;o Paulo state, a region that faces regular water crises. Investigative journalists have uncovered the scale of resource consumption, and Brazil is offering generous incentives with unclear returns. Community awareness is growing.",
+                source: "Ag&ecirc;ncia P&uacute;blica / TechPolicy Press, 2025"
+            },
+            // AFRICA & ASIA
+            {
+                lat: -1.29, lng: 36.82,
+                name: "Nairobi, Kenya",
+                type: "legal",
+                desc: "Kenya's High Court suspended Worldcoin's biometric data campaign in 2023, ordering deletion of all collected iris scans within seven days. The ruling cited violations of Kenya's Data Protection Act and set a precedent for judicial oversight of tech companies operating without proper consent.",
+                source: "New America / AlgorithmWatch, 2023-2025"
+            },
+            {
+                lat: 6.52, lng: 3.38,
+                name: "Lagos, Nigeria",
+                type: "organized",
+                desc: "Nigeria's 17 data centers require about 137 MW but the grid provides only four hours of power per day, forcing reliance on diesel generators that increase pollution. Growing debate about digital sovereignty and whether data center expansion is replicating patterns of dependency. Foreign firms dominate infrastructure with limited local oversight.",
+                source: "African Energy Chamber / New America, 2025"
+            },
+            {
+                lat: 3.14, lng: 101.69,
+                name: "Kuala Lumpur, Malaysia",
+                type: "moratorium",
+                desc: "Malaysia moved to slow data center development in September 2024 after strain on the nation's energy grid and water resources became apparent. The government recognized that economic benefits are not automatic and communities have the right to set terms.",
+                source: "Mongabay, Nov 2025"
+            }
+        ];
+
+        const typeColors = {
+            blocked: '#e74c3c',
+            moratorium: '#f39c12',
+            organized: '#3498db',
+            legal: '#9b59b6'
+        };
+
+        const typeLabels = {
+            blocked: 'Project Blocked / Canceled',
+            moratorium: 'Moratorium / Regulation',
+            organized: 'Organized Opposition',
+            legal: 'Legal Challenge'
+        };
+
+        // Init map
+        const map = L.map('pushback-map', {
+            center: [25, 0],
+            zoom: 2,
+            minZoom: 2,
+            maxZoom: 10,
+            scrollWheelZoom: true,
+            zoomControl: true
+        });
+
+        // Dark tile layer
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 19
+        }).addTo(map);
+
+        // Create markers
+        let allMarkers = [];
+
+        locations.forEach(loc => {
+            const color = typeColors[loc.type];
+
+            const marker = L.circleMarker([loc.lat, loc.lng], {
+                radius: 7,
+                fillColor: color,
+                color: '#fff',
+                weight: 1.5,
+                opacity: 0.9,
+                fillOpacity: 0.8
+            });
+
+            marker.locationType = loc.type;
+
+            const popupContent = `
+                <div class="popup-location">${loc.name}</div>
+                <span class="popup-type ${loc.type}">${typeLabels[loc.type]}</span>
+                <div class="popup-desc">${loc.desc}</div>
+                <div class="popup-source">${loc.source}</div>
+            `;
+
+            marker.bindPopup(popupContent, { maxWidth: 300 });
+
+            marker.on('mouseover', function() {
+                this.setStyle({ radius: 10, weight: 2.5 });
+            });
+            marker.on('mouseout', function() {
+                this.setStyle({ radius: 7, weight: 1.5 });
+            });
+
+            marker.addTo(map);
+            allMarkers.push(marker);
+        });
+
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const filter = this.dataset.filter;
+
+                allMarkers.forEach(m => {
+                    if (filter === 'all' || m.locationType === filter) {
+                        m.setStyle({ fillOpacity: 0.8, opacity: 0.9 });
+                        m.setRadius(7);
+                    } else {
+                        m.setStyle({ fillOpacity: 0.1, opacity: 0.15 });
+                        m.setRadius(5);
+                    }
+                });
+            });
+        });
+    })();
+    </script>
+</body>
+</html>
