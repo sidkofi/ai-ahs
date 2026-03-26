@@ -10,19 +10,29 @@
     <style>
         /* Phase 3 specific styles */
         .map-section {
-            margin: 2.5rem -1.5rem;
+            /* Break out of the .content container to span full viewport */
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            margin-top: 2.5rem;
+            margin-bottom: 2.5rem;
             background: var(--text);
-            border-radius: 6px;
             overflow: hidden;
         }
 
         @media (max-width: 640px) {
             .map-section {
-                margin: 2rem -1.2rem;
+                margin-top: 2rem;
+                margin-bottom: 2rem;
             }
         }
 
         .map-header {
+            max-width: var(--wide-width);
+            margin: 0 auto;
             padding: 1.4rem 1.6rem 0.8rem;
         }
 
@@ -45,17 +55,19 @@
 
         #pushback-map {
             width: 100%;
-            height: 520px;
+            height: 620px;
             background: #1a1a1a;
         }
 
         @media (max-width: 640px) {
             #pushback-map {
-                height: 380px;
+                height: 420px;
             }
         }
 
         .map-legend {
+            max-width: var(--wide-width);
+            margin: 0 auto;
             padding: 0.8rem 1.6rem 1.2rem;
             display: flex;
             gap: 1.5rem;
@@ -156,6 +168,8 @@
 
         /* Filter bar */
         .map-filters {
+            max-width: var(--wide-width);
+            margin: 0 auto;
             padding: 0 1.6rem 0.6rem;
             display: flex;
             gap: 0.5rem;
@@ -243,8 +257,10 @@
             <a href="index.html" class="nav-logo">The Illusion of Clean AI</a>
             <div class="nav-links">
                 <a href="index.html">Phase 1: The Promise</a>
+                <a href="phase1-5.html">Phase 1.5: The Labor</a>
                 <a href="phase2.html">Phase 2: The Price</a>
                 <a href="phase3.html" class="active">Phase 3: The Pushback</a>
+                <a href="journal.html">Journal</a>
             </div>
         </div>
     </nav>
